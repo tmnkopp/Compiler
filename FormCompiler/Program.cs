@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using SOM.Extentions;
 namespace FormCompiler
 {
+// Process_FRMVAL();
+ // GenDBScript();
     class CIO
     {
         private static string root = @"C:\temp\templates\CIO2020Q2\";
@@ -19,17 +21,15 @@ namespace FormCompiler
         public static void Main(string[] args)
         {
             Cache.Write(""); 
-            Console.ForegroundColor = ConsoleColor.Green;
-            // GenDBScript();
-            GenerateNewForms();
-            // Process_FRMVAL();
+            Console.ForegroundColor = ConsoleColor.Green; 
+            GenerateNewForms(); 
             Cache.CacheEdit();
 
         }
         private static void GenDBScript()
         { 
             string root = @"C:\temp\templates\CIO2020Q2\DB_Update7.19_CIOQ120.sql"; 
-            string dest = @"D:\dev\CyberScope\CyberScopeBranch\CSwebdev\database\DB_Update7.22_CIOQ220.sql";
+            string dest = @"C:\temp\templates\CIO2020Q2\compiled\DB_Update7.22_CIOQ220.sql";
 
             string content = new FileReader(root).Read().ToString();
             content = new SqlKeyValCompile(@"C:\temp\templates\KVScriptForm.sql").Execute(content);
@@ -89,8 +89,7 @@ namespace FormCompiler
                 }
                 matches = Regex.Matches(content, " PK_key=\"\\d{5}");
                 foreach (Match match in matches)
-                {
-                    
+                { 
                     foreach (Capture capture in match.Captures)
                     {
                         string PK = capture.Value.Replace("\"", "").Replace(" PK_key=", "");
@@ -120,7 +119,7 @@ namespace FormCompiler
         private static void Process_FRMVAL()
         {
             string root = @"C:\temp\templates\CIO2020Q2\frmVal_2020Q1CIO.sql";
-            string dest  = @"D:\dev\CyberScope\CyberScopeBranch\CSwebdev\database\Sprocs\frmVal_2020Q2CIO.sql";
+            string dest  = @"C:\temp\templates\CIO2020Q2\compiled\frmVal_2020Q2CIO.sql";
 
             string content = new FileReader(root).Read().ToString();
             content = new SqlKeyValCompile(@"C:\temp\templates\KVFrmVal.sql").Execute(content);
@@ -156,7 +155,7 @@ namespace FormCompiler
                     }
                 }
             }
-            return string.Format("<!--{1}fsma_QuestionGroup{1}{0}{1}-->", SB.ToString().Trim(), CIO.prefix);
+            return string.Format("<!--fsma_QuestionGroup{1}{0}{1}-->", SB.ToString().Trim(), CIO.prefix);
         }
 
         private static string QuestionInfo(string PK_Question) {
@@ -184,7 +183,7 @@ namespace FormCompiler
                     }
                 }
             }
-            return string.Format("<!--{1}fsma_Question{1}{0}{1}-->", SB.ToString().Trim(), CIO.prefix); 
+            return string.Format("<!--fsma_Question{1}{0}{1}-->", SB.ToString().Trim(), CIO.prefix); 
         }
         private static void GenerateNewControlTemplate()
         {
