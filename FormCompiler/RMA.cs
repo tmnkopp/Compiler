@@ -41,8 +41,8 @@ namespace FormCompiler
             {
                 content = new FileReader(file.FullName).Read().ToString();
                 content = new SqlKeyValCompile(@"C:\temp\templates\CIO\KVScriptForm.sql").Execute(content);
-          
-                string newfile = $"{dest}\\{GetFileName(file.Name)}";
+                string renamed = new SqlKeyValCompile(@"C:\temp\templates\CIO\KVScriptForm.sql").Execute(file.Name);
+                string newfile = $"{dest}\\{renamed}";
                 FileWriter fw = new FileWriter(newfile);
                 fw.Write(content);
                  
@@ -50,8 +50,7 @@ namespace FormCompiler
                 content = Utils.PK_QuestionInject(content);
                 content = Utils.PKGroupInject(content);
                 content = Utils.PK_KeyInject(content);
-
-
+                 
                 if (newfile.EndsWith(".aspx")) {
                     content = content.RemoveEmptyLines();
                 }

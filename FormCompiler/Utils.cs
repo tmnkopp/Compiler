@@ -18,14 +18,11 @@ namespace FormCompiler
         public static string PK_QuestionInject(string content)
         {
             MatchCollection matches = Regex.Matches(content, "PK_Question=\"\\d{5}");
-            foreach (Match match in matches)
-            {
-                foreach (Capture capture in match.Captures)
-                {
+            foreach (Match match in matches)  {
+                foreach (Capture capture in match.Captures)  {
                     string PK = capture.Value.Replace("\"", "").Replace("PK_Question=", "");
                     string target = new BlockExtractor("qpk", capture.Value, "<tr", "/tr>").Execute(content);
-                    if (target != "" && !FoundKeys.ContainsKey(PK))
-                    {
+                    if (target != "" && !FoundKeys.ContainsKey(PK))  {
                         FoundKeys.Add(PK, capture.Index.ToString());
                         content = content.Replace(target, string.Format("{0}{2}{1}\n", Utils.QuestionInfo(PK), target, Utils.prefix));
                     }
@@ -36,33 +33,26 @@ namespace FormCompiler
         public static string PKGroupInject(string content)
         {
             MatchCollection matches = Regex.Matches(content, "Group\" PK_key=\"\\d{4,5}");
-            foreach (Match match in matches)
-            {
-                foreach (Capture capture in match.Captures)
-                {
+            foreach (Match match in matches) {
+                foreach (Capture capture in match.Captures)  {
                     string PK = capture.Value.Replace("\"", "").Replace("Group PK_key=", "");
                     string target = new BlockExtractor("qgpk", capture.Value, "<tr", "/tr>").Execute(content);
-                    if (target != "" && !FoundKeys.ContainsKey(PK))
-                    {
+                    if (target != "" && !FoundKeys.ContainsKey(PK))  {
                         FoundKeys.Add(PK, capture.Index.ToString());
                         content = content.Replace(target, string.Format("{0}{2}{1}\n", Utils.GroupInfo(PK), target, Utils.prefix));
                     }
                 }
             }
             return content;
-        }
-
+        } 
         public static string PK_KeyInject(string content)
         {
             MatchCollection matches = Regex.Matches(content, " PK_key=\"\\d{5}");
-            foreach (Match match in matches)
-            {
-                foreach (Capture capture in match.Captures)
-                {
+            foreach (Match match in matches)    {
+                foreach (Capture capture in match.Captures)   {
                     string PK = capture.Value.Replace("\"", "").Replace(" PK_key=", "");
                     string target = new BlockExtractor("pk", capture.Value, "<tr", "/tr>").Execute(content);
-                    if (target != "" && !FoundKeys.ContainsKey(PK))
-                    {
+                    if (target != "" && !FoundKeys.ContainsKey(PK))  {
                         FoundKeys.Add(PK, capture.Index.ToString());
                         content = content.Replace(target, string.Format("{0}{2}{1}\n", Utils.QuestionInfo(PK), target, Utils.prefix));
                     }

@@ -15,9 +15,7 @@ namespace FormCompiler
 // Process_FRMVAL();
  // GenDBScript();
     class CIO
-    {
-        private static string root = @"C:\temp\templates\CIO2020Q2\";
-        private static string prefix = "\n\t\t\t";
+    { 
         public static void Main(string[] args)
         {
             Cache.Write(""); 
@@ -68,7 +66,7 @@ namespace FormCompiler
                         string target = new BlockExtractor("qpk", capture.Value, "<tr", "/tr>").Execute(content);
                         if (target != "" && !FoundKeys.ContainsKey(PK)) {
                             FoundKeys.Add(PK, capture.Index.ToString()); 
-                            content = content.Replace(target, string.Format("{0}{2}{1}\n", QuestionInfo(PK), target, CIO.prefix));
+                            content = content.Replace(target, string.Format("{0}{2}{1}\n", QuestionInfo(PK), target, Utils.prefix));
                         }
                     }
                 }
@@ -83,7 +81,7 @@ namespace FormCompiler
                         if (target != "" && !FoundKeys.ContainsKey(PK))
                         {
                             FoundKeys.Add(PK, capture.Index.ToString());
-                            content = content.Replace(target, string.Format("{0}{2}{1}\n", GroupInfo(PK), target, CIO.prefix));
+                            content = content.Replace(target, string.Format("{0}{2}{1}\n", GroupInfo(PK), target, Utils.prefix));
                         } 
                     }
                 }
@@ -97,7 +95,7 @@ namespace FormCompiler
                         if (target != "" && !FoundKeys.ContainsKey(PK))
                         {
                             FoundKeys.Add(PK, capture.Index.ToString());
-                            content = content.Replace(target, string.Format("{0}{2}{1}\n", QuestionInfo(PK), target, CIO.prefix));
+                            content = content.Replace(target, string.Format("{0}{2}{1}\n", QuestionInfo(PK), target, Utils.prefix));
                         }
                     }
                 }
@@ -144,18 +142,18 @@ namespace FormCompiler
                     {
                         if (rdr.Read())
                         { 
-                            SB.Append(CIO.prefix + "{");
-                            SB.AppendFormat("{1}\"PK_QuestionGroup\":\"{0}\",", rdr["PK_QuestionGroup"].ToString(), CIO.prefix);
-                            SB.AppendFormat("{1}\"GroupName\":\"{0}\",", rdr["GroupName"].ToString(), CIO.prefix);
-                            SB.AppendFormat("{1}\"PK_Form\":\"{0}\",", rdr["PK_Form"].ToString(), CIO.prefix);
-                            SB.AppendFormat("{1}\"FK_FormPage\":\"{0}\",", rdr["FK_FormPage"].ToString().Replace("\"", "'"), CIO.prefix);
-                            SB.AppendFormat("{1}\"Text\":\"{0}\"", rdr["Text"].ToString().Replace("\"", "'"), CIO.prefix);
-                            SB.Append(CIO.prefix + "}\n");
+                            SB.Append(Utils.prefix + "{");
+                            SB.AppendFormat("{1}\"PK_QuestionGroup\":\"{0}\",", rdr["PK_QuestionGroup"].ToString(), Utils.prefix);
+                            SB.AppendFormat("{1}\"GroupName\":\"{0}\",", rdr["GroupName"].ToString(), Utils.prefix);
+                            SB.AppendFormat("{1}\"PK_Form\":\"{0}\",", rdr["PK_Form"].ToString(), Utils.prefix);
+                            SB.AppendFormat("{1}\"FK_FormPage\":\"{0}\",", rdr["FK_FormPage"].ToString().Replace("\"", "'"), Utils.prefix);
+                            SB.AppendFormat("{1}\"Text\":\"{0}\"", rdr["Text"].ToString().Replace("\"", "'"), Utils.prefix);
+                            SB.Append(Utils.prefix + "}\n");
                         }
                     }
                 }
             }
-            return string.Format("<!--fsma_QuestionGroup{1}{0}{1}-->", SB.ToString().Trim(), CIO.prefix);
+            return string.Format("<!--fsma_QuestionGroup{1}{0}{1}-->", SB.ToString().Trim(), Utils.prefix);
         }
 
         private static string QuestionInfo(string PK_Question) {
@@ -172,18 +170,18 @@ namespace FormCompiler
                     {
                         if (rdr.Read())
                         { 
-                            SB.Append(CIO.prefix + "{");
-                            SB.AppendFormat("{1}\"PK_Question\":\"{0}\",", rdr["PK_Question"].ToString(), CIO.prefix);
-                            SB.AppendFormat("{1}\"identifier_text\":\"{0}\",", rdr["identifier_text"].ToString(), CIO.prefix) ;
-                            SB.AppendFormat("{1}\"FK_QuestionGroup\":\"{0}\",", rdr["FK_QuestionGroup"].ToString(), CIO.prefix);
-                            SB.AppendFormat("{1}\"QuestionText\":\"{0}\",", rdr["QuestionText"].ToString().Replace("\"","'"), CIO.prefix);
-                            SB.AppendFormat("{1}\"FK_QuestionType\":\"{0}\"", rdr["FK_QuestionType"].ToString(), CIO.prefix);
-                            SB.Append(CIO.prefix+"}\n" );
+                            SB.Append(Utils.prefix + "{");
+                            SB.AppendFormat("{1}\"PK_Question\":\"{0}\",", rdr["PK_Question"].ToString(), Utils.prefix);
+                            SB.AppendFormat("{1}\"identifier_text\":\"{0}\",", rdr["identifier_text"].ToString(), Utils.prefix) ;
+                            SB.AppendFormat("{1}\"FK_QuestionGroup\":\"{0}\",", rdr["FK_QuestionGroup"].ToString(), Utils.prefix);
+                            SB.AppendFormat("{1}\"QuestionText\":\"{0}\",", rdr["QuestionText"].ToString().Replace("\"","'"), Utils.prefix);
+                            SB.AppendFormat("{1}\"FK_QuestionType\":\"{0}\"", rdr["FK_QuestionType"].ToString(), Utils.prefix);
+                            SB.Append(Utils.prefix+"}\n" );
                         }
                     }
                 }
             }
-            return string.Format("<!--fsma_Question{1}{0}{1}-->", SB.ToString().Trim(), CIO.prefix); 
+            return string.Format("<!--fsma_Question{1}{0}{1}-->", SB.ToString().Trim(), Utils.prefix); 
         }
         private static void GenerateNewControlTemplate()
         {
