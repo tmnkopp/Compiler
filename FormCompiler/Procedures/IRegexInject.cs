@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace FormCompiler
+namespace Compiler
 {
     public interface IRegexInject
     {
@@ -21,7 +21,7 @@ namespace FormCompiler
                 foreach (Capture capture in match.Captures)
                 {
                     string PK = capture.Value.Replace("\"", "").Replace("PK_Question=", "");
-                    string target = new BlockExtractor("qpk", capture.Value, "<tr", "/tr>").Execute(content);
+                    string target = new BlockExtractor( capture.Value, "<tr", "/tr>").Execute(content);
                     if (target != "" )
                     {
                         content = content.Replace(target, string.Format("{0}{2}{1}\n", Utils.QuestionInfo(PK), target, Utils.prefix));
