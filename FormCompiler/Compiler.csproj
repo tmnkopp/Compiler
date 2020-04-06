@@ -70,7 +70,9 @@
   <ItemGroup>
     <Compile Include="DirectoryRecompiler.cs" />
     <Compile Include="CIOCompiler.cs" />
-    <Compile Include="IBootstrapper.cs" />
+    <Compile Include="FileSysCompiler.cs" />
+    <Compile Include="Invoker.cs" />
+    <Compile Include="Models\TemplateFile.cs" />
     <Compile Include="Procedures\IRegexInject.cs" />
     <Compile Include="Procedures\SimpleReplace.cs" />
     <Compile Include="Program.cs" />

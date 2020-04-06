@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using SOM.Extentions;
 using SOM.Compilers;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace Compiler
 { 
@@ -19,30 +20,58 @@ namespace Compiler
     { 
         public static void Main(string[] args) 
         {
-     
-            CompilationBuilder<DirectoryRecompiler> compiler = new CompilationBuilder<DirectoryRecompiler>();
-            FileWriter w = new FileWriter("c:\\temp\\testing\\TEMP.txt");
+
+            IProcedure obj = new RepeaterCompile(1, 10);
+            Tuple<string, string, List<IProcedure>> tup 
+            = new Tuple<string, string, List<IProcedure>>("","", new List<IProcedure> { new RepeaterCompile(1, 10) });
+
+            DirectoryBuilder fsc = new DirectoryBuilder( 
+                new Dictionary<string, string>() { 
+                { "c:\\temp\\testing\\temp-1.txt","[index]"}
+                ,{ "c:\\temp\\testing\\temp-2.txt","[index]"}
+            }, 
+                new List<IProcedure>() { 
+                    new RepeaterCompile(1,15)
+            });
+            fsc.Build();
+            Type type = Type.GetType("SOM.Procedures.RepeaterCompile, SOM");
+            ConstructorInfo ctor = type.GetConstructors()[0];
+            
+            IProcedure proc = (IProcedure)Invoker.InvokeProcedure("RepeaterCompile -1 -15");
+
+            
+            FileWriter w = new FileWriter("c:\\temp\\testing\\temp.txt");
             w.Write("[INDEX]", true);
-            w = new FileWriter("c:\\temp\\testing\\TEMP1.txt");
-            w.Write("[INDEX1]", true);
 
-            compiler.Init()
-                .CompileMode(CompileMode.Commit)
-                .Source("c:\\temp\\testing\\") 
-                .Dest("c:\\temp\\$testing\\", true) 
-                .ContentCompilation(
-                    new List<IProcedure> { 
-                    new JsonReplace("{\"1\":\"2\"}")
-                    }
-                )
-                .FilenameCompilation(
-                    new List<IProcedure> {
-                    new JsonReplace("{\".txt\":\".doc\"}"),
-                    new JsonReplace("{\"1\":\"2\"}")
-                    }
-                )
-                .Compile(); 
+            FileReader r = new FileReader("c:\\temp\\testing\\temp.txt");
+            string content = r.Read();
 
+            content = proc.Execute(content);
+            Cache.Write(content);
+            Cache.CacheEdit();
+            
+            
+            
+            //CompilationBuilder<DirectoryRecompiler> compiler = new CompilationBuilder<DirectoryRecompiler>();
+            //IProcedure proc = new RepeaterCompile(
+
+         //   compiler.Init()
+         //       .CompileMode(CompileMode.Commit)
+         //       .Source("c:\\temp\\testing\\") 
+         //       .Dest("c:\\temp\\$testing\\", true) 
+         //       .ContentCompilation(
+         //           new List<IProcedure> { 
+         //           new JsonReplace("{\"1\":\"2\"}")
+         //           }
+         //       )
+         //       .FilenameCompilation(
+         //           new List<IProcedure> {
+         //           new JsonReplace("{\".txt\":\".doc\"}"),
+         //           new JsonReplace("{\"1\":\"2\"}")
+         //           }
+         //       )
+         //       .Compile(); 
+         //
         } 
     } 
 }
