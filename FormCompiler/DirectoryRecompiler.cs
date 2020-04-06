@@ -60,35 +60,5 @@ namespace Compiler
                 Console.WriteLine($"{newFileName}\n{content}\n");
 
         } 
-    }
-
-
-
-
-    public class DictionaryCompiler : BaseCompiler 
-    {
-        private DirectoryInfo DI;
-        public override void Compile()
-        {
-            Dictionary<string, string> dict = new Dictionary<string, string>() {
-                    {"c:\\temp\\testing\\",""},
-                    {"c:\\temp\\testing\\test.txt","hello world111"} ,
-                    {"c:\\temp\\testing\\test\\txt","hello world"} ,
-                    {"c:\\temp\\testing\\test\\txt\\test.txt","hello world222"}
-            };
-            foreach (KeyValuePair<string, string> KVP in dict)
-            {
-                if (!KVP.Key.Contains("."))
-                {
-                    DI = new DirectoryInfo(KVP.Key);
-                    if (!DI.Exists)
-                        DI.Create();
-                }  else  { 
-                    FileWriter w = new FileWriter($"{KVP.Key}");
-                    w.Write($"{KVP.Value}", true); 
-                } 
-            } 
-        }
-    }
-  
+    }  
 }

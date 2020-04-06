@@ -1,4 +1,5 @@
-﻿using SOM.Procedures;
+﻿using SOM.IO;
+using SOM.Procedures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace Compiler.Models
         public string Path { get; set; }
         public string Content { get; set; }
         public List<IProcedure> ContentCompilers { get; set; }
+    
     }
 }

@@ -68,9 +68,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="DirectoryRecompiler.cs" />
-    <Compile Include="CIOCompiler.cs" />
-    <Compile Include="FileSysCompiler.cs" />
+    <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Projects\CIOCompiler.cs" />
+    <Compile Include="Models\TemplateBuilder.cs" />
     <Compile Include="Invoker.cs" />
     <Compile Include="Models\TemplateFile.cs" />
     <Compile Include="Procedures\IRegexInject.cs" />
@@ -84,6 +86,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SOM\Compilers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

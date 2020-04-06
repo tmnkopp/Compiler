@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -13,15 +14,13 @@ namespace Compiler
     public static class AppSettings
     {
   
-        public static string BasePath = ConfigurationManager.AppSettings["BasePath"].ToString();
-
+        public static string BasePath = ConfigurationManager.AppSettings["BasePath"].ToString(); 
         public static string SourceDir = ConfigurationManager.AppSettings["SourceDir"].ToString();
         public static string DestDir = ConfigurationManager.AppSettings["DestDir"].ToString();
  
     }
-
-    public static class Utils
-    {
+    public static class Utils {  
+   
 
         public static string prefix = "\n\t\t\t";
         public static Dictionary<string, string> FoundKeys = new Dictionary<string, string>();
