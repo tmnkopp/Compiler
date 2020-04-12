@@ -13,8 +13,7 @@ using SOM.Extentions;
 using SOM.Compilers; 
 using System.Reflection;
 using Compiler.Models;
-using SOM.Procedures.Data;
-
+using SOM.Formatters;
 namespace Compiler
 { 
     class Program
@@ -22,26 +21,22 @@ namespace Compiler
         public static void Main(string[] args) 
         {
             Bootstrapper.Run(); 
-            
-            FileReader fr = new FileReader($"{AppSettings.SourceDir}\\_class.txt");   
-            Type type = Type.GetType("Compiler.Models.TemplateFile, Compiler");
+            FileReader r = new FileReader($"{ AppSettings.SourceDir }_input.txt");
+            string content = r.Read();
+            //  string typeinfo = typeof(Formatters.PropFormatter).ToString(); 
+            //  Type type = Type.GetType($"Compiler.Formatters.PropFormatter, Compiler");
+            //  ConstructorInfo ctor = type.GetConstructors()[0];
+            //  ParameterInfo[] PI = ctor.GetParameters();
 
-            //Func<PropDefinition, string> converter = (propdef) => (string.Format("this.{0} == form.{0};\n", propdef.NAME));
-            Func<PropDefinition, string> format = (propdef) =>
-            (
-                 propdef.DATA_TYPE.Contains("int")  ? "1" : "2"  
-                //string.Format("this.{0} == form.{0};\n", propdef.NAME)
-            );
-             
-            TypeModelCompiler p = new TypeModelCompiler(
-                            "Compiler.Models.Invoice, Compiler",
-                            new Propformatter(format),
-                            (c, r) => c.Replace("[model]", r) 
-                        );
-            string result = p.Execute(fr.Read());
-            FileWriter w = new FileWriter($"{AppSettings.SourceDir}\\class.txt");
-            w.Write($"{result}", true);
-                   
+            ModelCompiler compiler;
+             compiler = new ModelCompiler(
+                "Clients",
+                "Compiler.Formatters.PropFormatter, Compiler");
+
+            content = compiler.Compile(content);
+            Cache.Write(content);
+            Cache.CacheEdit();
+
         }
     } 
 }

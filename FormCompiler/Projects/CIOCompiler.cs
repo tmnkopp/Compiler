@@ -17,10 +17,10 @@ namespace Compiler
         {
             Source = @"C:\temp\templates\CIO\";
             Dest = @"C:\temp\templates\CIO\$compiled\";
-            FilenameCompilation = new List<IProcedure>() {
-                new JsonReplace("{ \"Q2\":\"Q3\" , \"7.22\":\"7.24\" }")
+            FilenameCompilation = new List<ICompiler>() {
+                new JsonCompile("{ \"Q2\":\"Q3\" , \"7.22\":\"7.24\" }")
             };
-            ContentCompilation = new List<IProcedure>()  {
+            ContentCompilation = new List<ICompiler>()  {
                 new SqlKeyValCompile(@"C:\temp\templates\CIO\dbupdate.sql")
             };
 

@@ -10,17 +10,28 @@ namespace Compiler
     public static class Bootstrapper
     {
         public static void Run() {
+
             SOM.FileSys.Utils.DirectoryCreator(AppSettings.SourceDir, AppSettings.BasePath);
             string filelist = 
-                $"{AppSettings.SourceDir}_config.json\n" + 
-                $"{AppSettings.SourceDir}_components\\_config.json\n" +
-                $"{AppSettings.SourceDir}_services\\_config.json\n";
+                $"{AppSettings.SourceDir}_input.txt\n" + 
+                $"{AppSettings.SourceDir}_output.txt\n" ;
 
             SOM.FileSys.Utils.GenerateFiles(filelist);
-            FileWriter w = new FileWriter($"{AppSettings.SourceDir}\\_class.txt");
-            w.Write($"public class [entity] \n{{\n\t[entity]() {{ \n\t}} \n\t[fields] \n}}", true); 
-            w = new FileWriter($"{AppSettings.SourceDir}\\_form.txt");
-            w.Write($"\n[fields]\n", true);
+            FileWriter w = new FileWriter($"{AppSettings.SourceDir}\\_input.txt");  
+            w.Write($"[ModelCompile -Clients -PropFormatter]", true);
+
+            /*
+             
+            [ModelCompile -Clients -PropFormatter]
+             
+             ModelCompiler compiler;
+             compiler = new ModelCompiler(
+                "Clients",
+                "Compiler.Formatters.PropFormatter, Compiler");
+
+
+               content.Replace($"[ModelCompile -{_ModelName} -{_TypeFormatter.GetType().Name}]
+             */
         }
     }
 }
