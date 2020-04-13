@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SOM.FileSys;
+ 
 namespace Compiler
 {
     public static class Bootstrapper
@@ -18,7 +19,7 @@ namespace Compiler
 
             SOM.FileSys.Utils.GenerateFiles(filelist);
             FileWriter w = new FileWriter($"{AppSettings.SourceDir}\\_input.txt");  
-            w.Write($"[ModelCompile -Clients -PropFormatter]", true);
+            w.Write($"[ModelCompile -Clients -PropFormatter]\n[ModelCompile -Clients -NgInput]", true);
 
             /*
              

@@ -20,22 +20,24 @@ namespace Compiler
     { 
         public static void Main(string[] args) 
         {
-            Bootstrapper.Run(); 
+            Bootstrapper.Run();
             FileReader r = new FileReader($"{ AppSettings.SourceDir }_input.txt");
             string content = r.Read();
-            //  string typeinfo = typeof(Formatters.PropFormatter).ToString(); 
-            //  Type type = Type.GetType($"Compiler.Formatters.PropFormatter, Compiler");
-            //  ConstructorInfo ctor = type.GetConstructors()[0];
-            //  ParameterInfo[] PI = ctor.GetParameters();
-
+             
             ModelCompiler compiler;
              compiler = new ModelCompiler(
                 "Clients",
-                "Compiler.Formatters.PropFormatter, Compiler");
+                "Compiler.Formatters.NgInput, Compiler");
+
+
+
+  
 
             content = compiler.Compile(content);
             Cache.Write(content);
             Cache.CacheEdit();
+
+            Console.Read();
 
         }
     } 
