@@ -10,14 +10,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using SOM.Extentions;
-using SOM.Compilers; 
+using SOM.Compilers;
 using System.Reflection;
 using Compiler.Models;
 using SOM.Procedures.Data;
 
-namespace Compiler
-{
-    class Program
+namespace Compiler.Projects
+    {
+    class WPFORM
     {
         public static void Main(string[] args)
         {
@@ -30,7 +30,7 @@ namespace Compiler
             foreach (var line in lines)
             {
                 string label = line.Replace("\r", "");
-                string item = label.FormatItem(); 
+                string item = label.FormatItem();
                 result.Append($"<label>{label}</label>[text {item}]\n");
                 allFields.Add(item, label);
             }
@@ -57,24 +57,15 @@ namespace Compiler
             }
             Cache.Append(result.ToString());
 
-            
+
             foreach (KeyValuePair<string, string> kvp in allFields)
-            { 
-                result.Append( $"{kvp.Value}: [{kvp.Key}]\n");
-             
+            {
+                result.Append($"{kvp.Value}: [{kvp.Key}]\n");
+
             }
-            Cache.Write(result.ToString());
-
+            Cache.Write(result.ToString()); 
             Cache.CacheEdit();
-            // TypeModelCompiler p = new TypeModelCompiler(
-            //                 "Compiler.Models.Invoice, Compiler",
-            //                 new Propformatter(format),
-            //                 (c, r) => c.Replace("[model]", r) 
-            //             );
-            // string result = p.Execute(fr.Read());
-            // FileWriter w = new FileWriter($"{AppSettings.SourceDir}\\class.txt");
-            // w.Write($"{result}", true);
-
+  
         }
 
         public static string col2
@@ -87,14 +78,16 @@ namespace Compiler
         }
         public static string col1
         {
-            get { 
+            get
+            {
                 FileReader fr = new FileReader($"{AppSettings.SourceDir}\\_1colwrap.txt");
                 return fr.Read();
             }
-        } 
-    } 
+        }
+    }
 }
- 
+
+
 
 
 

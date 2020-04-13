@@ -12,9 +12,8 @@ namespace Compiler
         public static void Run() {
             SOM.FileSys.Utils.DirectoryCreator(AppSettings.SourceDir, AppSettings.BasePath);
             string filelist = 
-                $"{AppSettings.SourceDir}_config.json\n" + 
-                $"{AppSettings.SourceDir}_components\\_config.json\n" +
-                $"{AppSettings.SourceDir}_services\\_config.json\n";
+                $"{AppSettings.SourceDir}_in.txt\n" + 
+                $"{AppSettings.SourceDir}_out.txt";
 
             SOM.FileSys.Utils.GenerateFiles(filelist);
             FileWriter w = new FileWriter($"{AppSettings.SourceDir}\\_class.txt");
