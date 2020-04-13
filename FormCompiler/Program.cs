@@ -13,85 +13,35 @@ using SOM.Extentions;
 using SOM.Compilers; 
 using System.Reflection;
 using Compiler.Models;
-using SOM.Procedures.Data;
-
+using SOM.Formatters;
 namespace Compiler
 {
     class Program
     {
         public static void Main(string[] args)
         {
-            //Bootstrapper.Run(); 
-            Dictionary<string, string> allFields = new Dictionary<string, string>();
-            StringBuilder result = new StringBuilder();
-            Cache.Write("");
-            FileReader fr = new FileReader($"{AppSettings.SourceDir}\\_in.txt");
-            string[] lines = fr.Read().Split('\n');
-            foreach (var line in lines)
-            {
-                string label = line.Replace("\r", "");
-                string item = label.FormatItem(); 
-                result.Append($"<label>{label}</label>[text {item}]\n");
-                allFields.Add(item, label);
-            }
-            Cache.Append(result.ToString());
-
-            fr = new FileReader($"{AppSettings.SourceDir}\\_textarea.txt");
-            lines = fr.Read().Split('\n');
-            foreach (var line in lines)
-            {
-                string label = line.Replace("\r", "");
-                string item = label.FormatItem();
-                result.AppendFormat(Program.col1, label, $"[textarea {item}]");
-                allFields.Add(item, label);
-            }
-            Cache.Append(result.ToString());
-            fr = new FileReader($"{AppSettings.SourceDir}\\_metrics.txt");
-            lines = fr.Read().Split('\n');
-            foreach (var line in lines)
-            {
-                string label = line.Replace("\r", "");
-                string item = label.FormatItem();
-                result.AppendFormat(Program.col2, "", label, $"[select {item} \"Excellent\" \"Good\" \"Fair\" \"Poor\"]");
-                allFields.Add(item, label);
-            }
-            Cache.Append(result.ToString());
-
+            Bootstrapper.Run(); 
             
-            foreach (KeyValuePair<string, string> kvp in allFields)
-            { 
-                result.Append( $"{kvp.Value}: [{kvp.Key}]\n");
+            FileReader fr = new FileReader($"{AppSettings.SourceDir}\\_class.txt");   
+            Type type = Type.GetType("Compiler.Models.TemplateFile, Compiler");
+
+            //Func<PropDefinition, string> converter = (propdef) => (string.Format("this.{0} == form.{0};\n", propdef.NAME));
+            Func<PropDefinition, string> format = (propdef) =>
+            (
+                 propdef.DATA_TYPE.Contains("int")  ? "1" : "2"  
+                //string.Format("this.{0} == form.{0};\n", propdef.NAME)
+            );
              
-            }
-            Cache.Write(result.ToString());
-
-            Cache.CacheEdit();
-            // TypeModelCompiler p = new TypeModelCompiler(
-            //                 "Compiler.Models.Invoice, Compiler",
-            //                 new Propformatter(format),
-            //                 (c, r) => c.Replace("[model]", r) 
-            //             );
-            // string result = p.Execute(fr.Read());
-            // FileWriter w = new FileWriter($"{AppSettings.SourceDir}\\class.txt");
-            // w.Write($"{result}", true);
-
+            TypeModelCompiler p = new TypeModelCompiler(
+                            "Compiler.Models.Invoice, Compiler",
+                            new Propformatter(format),
+                            (c, r) => c.Replace("[model]", r) 
+                        );
+            string result = p.Execute(fr.Read());
+            FileWriter w = new FileWriter($"{AppSettings.SourceDir}\\class.txt");
+            w.Write($"{result}", true);
+                   
         }
-
-        public static string col2
-        {
-            get
-            {
-                FileReader fr = new FileReader($"{AppSettings.SourceDir}\\_2colwrap.txt");
-                return fr.Read();
-            }
-        }
-        public static string col1
-        {
-            get { 
-                FileReader fr = new FileReader($"{AppSettings.SourceDir}\\_1colwrap.txt");
-                return fr.Read();
-            }
-        } 
     } 
 }
  

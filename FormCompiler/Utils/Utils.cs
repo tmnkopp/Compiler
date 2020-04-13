@@ -11,14 +11,7 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
-    public static class AppSettings
-    {
-  
-        public static string BasePath = ConfigurationManager.AppSettings["BasePath"].ToString(); 
-        public static string SourceDir = ConfigurationManager.AppSettings["SourceDir"].ToString();
-        public static string DestDir = ConfigurationManager.AppSettings["DestDir"].ToString();
- 
-    }
+
     public static class Utils {  
    
 
@@ -31,7 +24,7 @@ namespace Compiler
             foreach (Match match in matches)  {
                 foreach (Capture capture in match.Captures)  {
                     string PK = capture.Value.Replace("\"", "").Replace("PK_Question=", "");
-                    string target = new BlockExtractor(  capture.Value, "<tr", "/tr>").Execute(content);
+                    string target = new BlockExtractor(  capture.Value, "<tr", "/tr>").Compile(content);
                     if (target != "" && !FoundKeys.ContainsKey(PK))  {
                         FoundKeys.Add(PK, capture.Index.ToString());
                         content = content.Replace(target, string.Format("{0}{2}{1}\n", Utils.QuestionInfo(PK), target, Utils.prefix));
@@ -46,7 +39,7 @@ namespace Compiler
             foreach (Match match in matches) {
                 foreach (Capture capture in match.Captures)  {
                     string PK = capture.Value.Replace("\"", "").Replace("Group PK_key=", "");
-                    string target = new BlockExtractor(  capture.Value, "<tr", "/tr>").Execute(content);
+                    string target = new BlockExtractor(  capture.Value, "<tr", "/tr>").Compile(content);
                     if (target != "" && !FoundKeys.ContainsKey(PK))  {
                         FoundKeys.Add(PK, capture.Index.ToString());
                         content = content.Replace(target, string.Format("{0}{2}{1}\n", Utils.GroupInfo(PK), target, Utils.prefix));
@@ -61,7 +54,7 @@ namespace Compiler
             foreach (Match match in matches)    {
                 foreach (Capture capture in match.Captures)   {
                     string PK = capture.Value.Replace("\"", "").Replace(" PK_key=", "");
-                    string target = new BlockExtractor( capture.Value, "<tr", "/tr>").Execute(content);
+                    string target = new BlockExtractor( capture.Value, "<tr", "/tr>").Compile(content);
                     if (target != "" && !FoundKeys.ContainsKey(PK))  {
                         FoundKeys.Add(PK, capture.Index.ToString());
                         content = content.Replace(target, string.Format("{0}{2}{1}\n", Utils.QuestionInfo(PK), target, Utils.prefix));

@@ -1,4 +1,6 @@
-﻿using SOM.Procedures.Data;
+﻿
+using SOM.Formatters;
+using SOM.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,44 +9,33 @@ using System.Threading.Tasks;
 
 namespace Compiler.Formatters
 {
-    public class PropFormatter
+    public class PropFormatter : ITypeFormatter<AppModelItem>
     {
-    }
-    public class ccCSHARPModel : IPropFormatter
-    {
-        public string Format(PropDefinition propDef)
-        {
-            string format = "public {1} {0} {{ get; set; }}";
-            if (propDef.DATA_TYPE.ToLower().Contains("int"))
-                return string.Format(format, propDef.NAME, "int");
-            if (propDef.DATA_TYPE.ToLower().Contains("date"))
-                return string.Format(format, propDef.NAME, "DateTime");
-            return string.Format(format, propDef.NAME, "string");
-        }
-    }
-    public class ccNgInput : IPropFormatter
-    {
-        public string Format(PropDefinition propDef)
-        {
-            string format = "<input type=\"text\" id=\"{0}\" formControlName =\"{0}\" class=\"form-control\" />";
-
-            if (propDef.DATA_TYPE.ToLower().Contains("int"))
+        public string Format(AppModelItem type)        {
+            string format = "public {1} {0} {{ get; set; }}\n";
+            if (type.DataType.ToLower().Contains("int"))
             {
-                return string.Format(format, propDef.NAME, "int");
+                return string.Format(format, type.Name, "integer");
             }
-            if (propDef.DATA_TYPE.ToLower().Contains("date"))
-                return string.Format(format, propDef.NAME, "DateTime");
-            return string.Format(format, propDef.NAME, "string");
+            return string.Format(format, type.Name, "string");
         }
     }
-    public class ccNGInterface : IPropFormatter
+    public class NgInput : ITypeFormatter<AppModelItem>
     {
-        public string Format(PropDefinition propDef)
+        public string Format(AppModelItem type)
         {
-            string format = "{0}: {1};";
-            if (propDef.DATA_TYPE.ToLower().Contains("int"))
-                return string.Format(format, propDef.NAME, "number");
-            return string.Format(format, propDef.NAME, "string");
+            string format = "<input type=\"text\" id=\"{0}\" formControlName =\"{0}\" class=\"form-control\" />\n";
+            
+            if (type.DataType.ToLower().Contains("int"))
+            {
+                return string.Format(format, type.Name, "int");
+            }
+            if (type.DataType.ToLower().Contains("date"))
+            {
+                return string.Format(format, type.Name, "DateTime");
+            }
+
+            return string.Format(format, type.Name, "string");
         }
-    }
+    } 
 }

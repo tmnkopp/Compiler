@@ -70,18 +70,15 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="DirectoryRecompiler.cs" />
-    <Compile Include="Extentions.cs" />
     <Compile Include="Formatters\PropFormatter.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Projects\CIOCompiler.cs" />
     <Compile Include="Models\TemplateBuilder.cs" />
-    <Compile Include="Invoker.cs" />
     <Compile Include="Models\TemplateFile.cs" />
-    <Compile Include="Procedures\IRegexInject.cs" />
-    <Compile Include="Procedures\SimpleReplace.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projects\WPFORM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\AppSettings.cs" />
     <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +87,8 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Procedures\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
