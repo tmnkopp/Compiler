@@ -10,10 +10,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using SOM.Extentions;
-using SOM.Compilers;
+using SOM.Procedures;
 using System.Reflection;
-using Compiler.Models;
-using SOM.Procedures.Data;
+using Compiler.Models; 
 
 namespace Compiler.Projects
     {
@@ -42,7 +41,7 @@ namespace Compiler.Projects
             {
                 string label = line.Replace("\r", "");
                 string item = label.FormatItem();
-                result.AppendFormat(Program.col1, label, $"[textarea {item}]");
+                result.AppendFormat(WPFORM.col1, label, $"[textarea {item}]");
                 allFields.Add(item, label);
             }
             Cache.Append(result.ToString());
@@ -52,7 +51,7 @@ namespace Compiler.Projects
             {
                 string label = line.Replace("\r", "");
                 string item = label.FormatItem();
-                result.AppendFormat(Program.col2, "", label, $"[select {item} \"Excellent\" \"Good\" \"Fair\" \"Poor\"]");
+                result.AppendFormat(WPFORM.col2, "", label, $"[select {item} \"Excellent\" \"Good\" \"Fair\" \"Poor\"]");
                 allFields.Add(item, label);
             }
             Cache.Append(result.ToString());

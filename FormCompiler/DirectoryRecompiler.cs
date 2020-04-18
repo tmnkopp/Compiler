@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using SOM.Compilers;
+using System.Threading.Tasks; 
 namespace Compiler
 { 
     public class DirectoryRecompiler : BaseCompiler 

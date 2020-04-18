@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SOM.Compilers; 
+using SOM.Procedures; 
 namespace Compiler
 {
     public class CIOCompiler : BaseCompiler
@@ -15,6 +15,7 @@ namespace Compiler
         public static string SprocPath = $"{ProdPath}\\database\\sprocs\\";
         public CIOCompiler()
         {
+             
             Source = @"C:\temp\templates\CIO\";
             Dest = @"C:\temp\templates\CIO\$compiled\";
             FilenameCompilation = new List<ICompiler>() {
