@@ -20,7 +20,7 @@ namespace Compiler
         public void ProcessDirectory(string targetDirectory)
         { 
             string newDir = targetDirectory.Replace(Source, Dest); 
-            foreach (ICompiler proc in FilenameCompilation)
+            foreach (ICompiler proc in FilenameCompilers)
                 newDir = proc.Compile(newDir).RemoveWhiteAndBreaks();
 
             DirectoryInfo DI = new DirectoryInfo(newDir);
@@ -43,11 +43,11 @@ namespace Compiler
         {
             FileReader r = new FileReader($"{path}");
             string content = r.Read();
-            foreach (ICompiler proc in ContentCompilation)
+            foreach (ICompiler proc in ContentCompilers)
                 content = proc.Compile(content);
              
             string newFileName = path.Replace(Source, Dest);
-            foreach (ICompiler proc in FilenameCompilation)
+            foreach (ICompiler proc in FilenameCompilers)
                 newFileName = proc.Compile(newFileName).RemoveWhiteAndBreaks();
 
             if (CompileMode == CompileMode.Commit)

@@ -20,9 +20,34 @@ namespace Compiler
     {
         public static void Main(string[] args)
         {
-    
+            Cache.Write("");
+            CompilationBuilder<FileCompiler> compiler = new CompilationBuilder<FileCompiler>();
+            compiler.Init()
+                .CompileMode(CompileMode.Commit) 
+                .ContentCompilers(
+                    new List<ICompiler>() {
+                    new JsonCompile("{  \"Q2\":\"Q3\"  }")
+                })
+                ;
+
+
+
+            Cache.CacheEdit();
         }
-    } 
+    }
+
+    public class FileCompiler : BaseCompiler
+    {
+        public static string ProdPath = @"D:\\dev\\CyberScope\\CyberScopeBranch\\CSwebdev\\";
+        public static string CodePath = $"{ProdPath}\\CustomControls\\HVAPoamAgency.ascx.vb"; 
+        public FileCompiler()
+        {
+
+            Source = CodePath;
+            Dest = CodePath;
+
+        } 
+    }
 }
  
 

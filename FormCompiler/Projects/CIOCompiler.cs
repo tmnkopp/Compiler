@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SOM.Procedures; 
+ 
 namespace Compiler
 {
     public class CIOCompiler : BaseCompiler
@@ -16,17 +16,24 @@ namespace Compiler
         public CIOCompiler()
         {
              
-            Source = @"C:\temp\templates\CIO\";
-            Dest = @"C:\temp\templates\CIO\$compiled\";
-            FilenameCompilation = new List<ICompiler>() {
-                new JsonCompile("{ \"Q2\":\"Q3\" , \"7.22\":\"7.24\" }")
+            Source = @"C:\temp\templates\RMA\";
+            Dest = @"C:\temp\templates\RMA\compiled\";
+            FilenameCompilers = new List<ICompiler>() {
+                new JsonCompile("{  \"Q2\":\"Q3\"  }")
             };
-            ContentCompilation = new List<ICompiler>()  {
-                new SqlKeyValCompile(@"C:\temp\templates\CIO\dbupdate.sql")
-            };
-
+            ContentCompilers = new List<ICompiler>()  {
+                new SqlKeyValCompile(@"C:\temp\templates\RMA\dbupdate.sql")
+            }; 
         }
-        public void Build() {
+        public void RMABuild(CompileMode compileMode)
+        {
+            CompilationBuilder<CIOCompiler> compiler = new CompilationBuilder<CIOCompiler>();
+            compiler.Init()
+                .CompileMode(compileMode)  
+                .FileFilter("*.asp*").Compile()
+                ;
+        }
+        public void CIOBuild() {
             CompilationBuilder<CIOCompiler> compiler = new CompilationBuilder<CIOCompiler>();
             compiler.Init()
                 .CompileMode(CompileMode.Commit) 
