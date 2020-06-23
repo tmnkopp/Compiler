@@ -70,6 +70,8 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="DirectoryRecompiler.cs" />
+    <Compile Include="Projects\BODCompiler.cs" />
+    <Compile Include="Projects\IGCompiler.cs" />
     <Compile Include="Utils\Extentions.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Projects\CIOCompiler.cs" />

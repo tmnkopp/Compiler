@@ -21,19 +21,34 @@ namespace Compiler
         public static void Main(string[] args)
         {
             Cache.Write("");
-            CompilationBuilder<FileCompiler> compiler = new CompilationBuilder<FileCompiler>();
-            compiler.Init()
-                .CompileMode(CompileMode.Commit) 
-                .ContentCompilers(
-                    new List<ICompiler>() {
-                    new JsonCompile("{  \"Q2\":\"Q3\"  }")
-                })
-                ;
-
-
-
+            BODCompiler compiler = new BODCompiler();
+            compiler.Run();
             Cache.CacheEdit();
         }
+    }
+
+    public class ReplaceCompiler  : BaseCompiler
+    {
+        public static string ProdPath = @"D:\\dev\\CyberScope\\CyberScopeBranch\\CSwebdev\\";
+        public static string CodePath = $"{ProdPath}\\CustomControls\\HVAPoamAgency.ascx.vb";
+        public ReplaceCompiler()
+        {
+            Source = CodePath;
+            Dest = CodePath;
+        }
+
+    }
+    
+    public class ParseCompileReplace  : BaseCompiler
+    {
+        public static string ProdPath = @"D:\\dev\\CyberScope\\CyberScopeBranch\\CSwebdev\\";
+        public static string CodePath = $"{ProdPath}\\CustomControls\\HVAPoamAgency.ascx.vb";
+        public ParseCompileReplace()
+        {
+            Source = CodePath;
+            Dest = CodePath;
+        }
+
     }
 
     public class FileCompiler : BaseCompiler
@@ -41,11 +56,9 @@ namespace Compiler
         public static string ProdPath = @"D:\\dev\\CyberScope\\CyberScopeBranch\\CSwebdev\\";
         public static string CodePath = $"{ProdPath}\\CustomControls\\HVAPoamAgency.ascx.vb"; 
         public FileCompiler()
-        {
-
+        { 
             Source = CodePath;
-            Dest = CodePath;
-
+            Dest = CodePath; 
         } 
     }
 }
