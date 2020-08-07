@@ -21,7 +21,7 @@ namespace Compiler
         public static void Main(string[] args)
         {
             Cache.Write("");
-            BODCompiler compiler = new BODCompiler();
+            SAOPCompiler compiler = new SAOPCompiler();
             compiler.Run();
             Cache.CacheEdit();
         }
