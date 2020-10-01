@@ -19,19 +19,7 @@ namespace Compiler
             SOM.FileSys.Utils.GenerateFiles(filelist);
             FileWriter w = new FileWriter($"{AppSettings.SourceDir}\\_input.txt");  
             w.Write($"[ModelCompile -Clients -PropFormatter]", true);
-
-            /*
-             
-            [ModelCompile -Clients -PropFormatter]
-             
-             ModelCompiler compiler;
-             compiler = new ModelCompiler(
-                "Clients",
-                "Compiler.Formatters.PropFormatter, Compiler");
-
-
-               content.Replace($"[ModelCompile -{_ModelName} -{_TypeFormatter.GetType().Name}]
-             */
+ 
         }
     }
 }

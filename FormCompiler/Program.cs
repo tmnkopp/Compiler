@@ -10,9 +10,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using SOM.Extentions;
-using SOM.Parsers; 
+using SOM; 
 using System.Reflection;
-using Compiler.Models; 
+using Compiler.Models;
+using SOM.Compilers;
 
 namespace Compiler
 {
@@ -21,45 +22,28 @@ namespace Compiler
         public static void Main(string[] args)
         {
             Cache.Write("");
-            SAOPCompiler compiler = new SAOPCompiler();
-            compiler.Run();
+            AppSettingsCompiler compiler = new AppSettingsCompiler();
+            compiler.Source  = AppSettings.SourceDir; 
+            compiler.FileFilter = "*.cshtml";
+            compiler.ContentCompilers.Add(new ModelTemplateInterpreter()); 
+            compiler.ContentCompilers.Add(new ModuloInterpreter()); 
+            compiler.CompileMode = CompileMode.Cache;
+            compiler.Compile(); 
             Cache.CacheEdit();
+
+            //DataCallCompiler.Run();
         }
-    }
-
-    public class ReplaceCompiler  : BaseCompiler
+    } 
+    class ReplaceByRegex : BaseRegexInterpreter
     {
-        public static string ProdPath = @"D:\\dev\\CyberScope\\CyberScopeBranch\\CSwebdev\\";
-        public static string CodePath = $"{ProdPath}\\CustomControls\\HVAPoamAgency.ascx.vb";
-        public ReplaceCompiler()
-        {
-            Source = CodePath;
-            Dest = CodePath;
-        }
-
-    }
-    
-    public class ParseCompileReplace  : BaseCompiler
-    {
-        public static string ProdPath = @"D:\\dev\\CyberScope\\CyberScopeBranch\\CSwebdev\\";
-        public static string CodePath = $"{ProdPath}\\CustomControls\\HVAPoamAgency.ascx.vb";
-        public ParseCompileReplace()
-        {
-            Source = CodePath;
-            Dest = CodePath;
-        }
-
-    }
-
-    public class FileCompiler : BaseCompiler
-    {
-        public static string ProdPath = @"D:\\dev\\CyberScope\\CyberScopeBranch\\CSwebdev\\";
-        public static string CodePath = $"{ProdPath}\\CustomControls\\HVAPoamAgency.ascx.vb"; 
-        public FileCompiler()
+        public ReplaceByRegex()
         { 
-            Source = CodePath;
-            Dest = CodePath; 
-        } 
+            this.KeyVals.Add("nvarchar", "string"); 
+        }
+        public override string Interpret(string content)
+        {
+            return base.Interpret(content);
+        }
     }
 }
  

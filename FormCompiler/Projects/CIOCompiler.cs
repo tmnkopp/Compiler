@@ -1,4 +1,5 @@
 ﻿using SOM.Procedures;
+using SOM.Compilers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,11 @@ namespace Compiler
         { 
             Source = @"C:\temp\templates\CIO\";
             Dest = @"C:\temp\templates\CIO\$compiled\";
-            FilenameCompilers = new List<ICompiler>() {
-                new JsonCompile("{  \"Q3\":\"Q4\"  }")
+            FilenameCompilers = new List<IInterpreter>() {
+                new KeyValInterpreter("{  \"Q3\":\"Q4\"  }")
             };
-            ContentCompilers = new List<ICompiler>()  {
-                new SqlKeyValCompile(@"C:\temp\templates\CIO\dbupdate.sql")
+            ContentCompilers = new List<IInterpreter>()  {
+                new SqlKeyValInterpreter(@"C:\temp\templates\CIO\dbupdate.sql")
             }; 
         }
         public void Run() {

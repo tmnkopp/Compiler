@@ -42,8 +42,8 @@ namespace Compiler
         public void WriteTemplate(TemplateFile templateFile)
         {
             string content = templateFile.Content;
-            foreach (ICompiler proc in templateFile.ContentCompilers)
-                content = proc.Compile(content);
+            foreach (IInterpreter proc in templateFile.ContentCompilers)
+                content = proc.Interpret(content);
          
             string path = templateFile.Path;
             FileWriter w = new FileWriter($"{path}");

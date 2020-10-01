@@ -1,4 +1,5 @@
-﻿using SOM.Extentions;
+﻿using SOM.Compilers;
+using SOM.Extentions;
 using SOM.IO;
 using SOM.Procedures;
 using System;
@@ -20,8 +21,8 @@ namespace Compiler
         public void ProcessDirectory(string targetDirectory)
         { 
             string newDir = targetDirectory.Replace(Source, Dest); 
-            foreach (ICompiler proc in FilenameCompilers)
-                newDir = proc.Compile(newDir).RemoveWhiteAndBreaks();
+            foreach (IInterpreter proc in FilenameCompilers)
+                newDir = proc.Interpret(newDir).RemoveWhiteAndBreaks();
 
             DirectoryInfo DI = new DirectoryInfo(newDir);
             if (CompileMode == CompileMode.Debug)
@@ -43,12 +44,12 @@ namespace Compiler
         {
             FileReader r = new FileReader($"{path}");
             string content = r.Read();
-            foreach (ICompiler proc in ContentCompilers)
-                content = proc.Compile(content);
+            foreach (IInterpreter proc in ContentCompilers)
+                content = proc.Interpret(content);
              
             string newFileName = path.Replace(Source, Dest);
-            foreach (ICompiler proc in FilenameCompilers)
-                newFileName = proc.Compile(newFileName).RemoveWhiteAndBreaks();
+            foreach (IInterpreter proc in FilenameCompilers)
+                newFileName = proc.Interpret(newFileName).RemoveWhiteAndBreaks();
 
             if (CompileMode == CompileMode.Commit)
             {
