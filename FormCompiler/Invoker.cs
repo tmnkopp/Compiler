@@ -14,25 +14,25 @@ namespace Compiler
         {     
         }
         public object Execute(string InvocationCommand) {
-            base.InvocationCommand = InvocationCommand;
+            base._InvocationCommand = InvocationCommand;
             return base.Invoke();
         }  
     }
     public abstract class BaseInvoker
     {
-        public string TypeNameFormat = "SOM.Procedures.{0}, SOM";
-        public string InvocationCommand = "";
+        protected string _TypeNameFormat = "SOM.Procedures.{0}, SOM";
+        protected string _InvocationCommand = "";
         public BaseInvoker( )
         { 
         }
         public BaseInvoker(string InvocationCommand)
         {
-            this.InvocationCommand = InvocationCommand.RemoveAsChars("[]");
+            this._InvocationCommand = InvocationCommand.RemoveAsChars("[]");
         } 
         public object Invoke()
         {  
-            string[] commands = InvocationCommand.Split(new string[] { " -" }, StringSplitOptions.None);
-            string TypeName = string.Format(this.TypeNameFormat, commands[0] );
+            string[] commands = _InvocationCommand.Split(new string[] { " -" }, StringSplitOptions.None);
+            string TypeName = string.Format(this._TypeNameFormat, commands[0] );
             Type type = Type.GetType(TypeName);
             ConstructorInfo ctor = type.GetConstructors()[0];
             ParameterInfo[] parms = GetConstructorParams(commands, ctor);
@@ -45,19 +45,14 @@ namespace Compiler
             int i = 0;
             foreach (ParameterInfo parm in PI)
             {
-                if (parm.ParameterType == typeof(int))
-                {
-                    typeParams[i] = Convert.ToInt32(parms[i + 1]);
-                }
-                else
-                {
-                    typeParams[i] = parms[i + 1].RemoveAsChars("'");
-                }
+                if (parm.ParameterType == typeof(int)) 
+                    typeParams[i] = Convert.ToInt32(parms[i + 1]); 
+                else 
+                    typeParams[i] = parms[i + 1].RemoveAsChars("'"); 
                 i++;
             }
             return PI;
-        }
-
+        } 
     }
     public static class TypeUtils
     {
@@ -69,8 +64,7 @@ namespace Compiler
                 return true;
             }
             catch (Exception)
-            {
-
+            { 
                 return false;
             }
         }

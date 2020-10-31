@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SOM.IO;
+using SOM.Parsers;
+using Compiler.Procedures;
+using SOM.Extentions;
 
 namespace Compiler
 {
@@ -15,28 +18,33 @@ namespace Compiler
         {
             Cache.Write("");
             Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
-            keyValuePairs.Add("Q3", "Q4");  
+            keyValuePairs.Add("2019", "2020");  
             
-            AppSettingsCompiler compiler = new AppSettingsCompiler(); 
-            compiler.CompileMode = CompileMode.Debug;
+            AppSettingsCompiler compiler = new AppSettingsCompiler();
+            compiler.CompileMode = CompileMode.Commit;
+            compiler.Source = AppSettings.SourceDir + "\\_compile"; 
             compiler.FilenameCompilers.Add(new RegexInterpreter(keyValuePairs));
+            compiler.ContentCompilers.Add(new MetricCommenter());
             compiler.ContentCompilers.Add( new SqlKeyValInterpreter(compiler.Source + "\\keyval.sql"));
             compiler.ContentCompilers.Add(new RegexInterpreter(keyValuePairs));
-            compiler.ContentCompilers.Add(new Incrementer(".*,(\\d{4}),.*", 1000));
-            //compiler.ContentCompilers.Add(new Incrementer("\"(PK_key=\\d{4})\".*", 1000)); 
-            //compiler.ContentCompilers.Add(new RegexInterpreter(keyValuePairs));  
-
-            compiler.Source = AppSettings.SourceDir+"\\_compile";
-            compiler.FileFilter = "*DBUpdate_Q4*.sql";
+            
+              
+            compiler.FileFilter = "*dbupdate*.sql";
+            compiler.Dest = @"D:\dev\CyberScope\CyberScopeBranch\CSwebdev\database\";
             compiler.Compile();
 
+            compiler.Dest = @"D:\dev\CyberScope\CyberScopeBranch\CSwebdev\database\sprocs\";
+            compiler.FileFilter = "*frmval*.sql";
+            compiler.Compile();
 
+            compiler.ContentFormatter = (c) => (c.RemoveEmptyLines());
+            compiler.Dest = @"D:\dev\CyberScope\CyberScopeBranch\CSwebdev\code\CyberScope\AAPS\2020";
             compiler.FileFilter = "*.aspx*";
-            compiler.Compile();
-             
+            compiler.Compile(); 
 
-            Cache.CacheEdit();
- 
+            //Cache.CacheEdit();
+
+
         }
     }
 }

@@ -21,30 +21,24 @@ namespace Compiler
     {
         public static void Main(string[] args)
         {
+
+            DataCallCompiler.Run();
+             
+        }
+
+        private static void Scaf() {
             Cache.Write("");
             AppSettingsCompiler compiler = new AppSettingsCompiler();
-            compiler.Source  = AppSettings.SourceDir; 
+            compiler.Source = AppSettings.SourceDir;
             compiler.FileFilter = "*.cshtml";
-            compiler.ContentCompilers.Add(new ModelTemplateInterpreter()); 
-            compiler.ContentCompilers.Add(new ModuloInterpreter()); 
+            compiler.ContentCompilers.Add(new ModelTemplateInterpreter());
+            compiler.ContentCompilers.Add(new ModuloInterpreter());
             compiler.CompileMode = CompileMode.Cache;
-            compiler.Compile(); 
+            compiler.Compile();
             Cache.CacheEdit();
 
-            //DataCallCompiler.Run();
         }
-    } 
-    class ReplaceByRegex : BaseRegexInterpreter
-    {
-        public ReplaceByRegex()
-        { 
-            this.KeyVals.Add("nvarchar", "string"); 
-        }
-        public override string Interpret(string content)
-        {
-            return base.Interpret(content);
-        }
-    }
+    }  
 }
  
 
