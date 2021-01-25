@@ -20,7 +20,7 @@ namespace Compiler
             Source = @"C:\temp\templates\CIO\";
             Dest = @"C:\temp\templates\CIO\$compiled\";
             FilenameCompilers = new List<IInterpreter>() {
-                new InterpretKeyVals("{  \"Q3\":\"Q4\"  }")
+                new KeyValInterpreter("{  \"Q3\":\"Q4\"  }")
             };
             ContentCompilers = new List<IInterpreter>()  {
                 new SqlKeyValInterpreter(@"C:\temp\templates\CIO\dbupdate.sql")

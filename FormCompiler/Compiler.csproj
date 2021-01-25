@@ -73,7 +73,6 @@
     <Compile Include="Procedures\MetricCommenter.cs" />
     <Compile Include="Projects\DataCall.cs" />
     <Compile Include="Utils\Extentions.cs" />
-    <Compile Include="Models\Invoice.cs" />
     <Compile Include="Projects\CIOCompiler.cs" />
     <Compile Include="Models\TemplateBuilder.cs" />
     <Compile Include="Invoker.cs" />

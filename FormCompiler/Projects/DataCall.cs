@@ -17,36 +17,46 @@ namespace Compiler
         public static void Run()
         {
             Cache.Write("");
-            Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
-            keyValuePairs.Add("2019", "2020");  
-            
+            Dictionary<string, string> kvp = new Dictionary<string, string>();
+            kvp.Add("Q4", "Q1");
+            kvp.Add("2020_", "2021_");
+             
             AppSettingsCompiler compiler = new AppSettingsCompiler();
             compiler.CompileMode = CompileMode.Commit;
-            compiler.Source = AppSettings.SourceDir + "\\_compile"; 
-            compiler.FilenameCompilers.Add(new RegexInterpreter(keyValuePairs));
-            compiler.ContentCompilers.Add(new MetricCommenter());
-            compiler.ContentCompilers.Add( new SqlKeyValInterpreter(compiler.Source + "\\keyval.sql"));
-            compiler.ContentCompilers.Add(new RegexInterpreter(keyValuePairs));
+            compiler.Source = AppSettings.SourceDir + "\\_compile";
+            compiler.FilenameCompilers.Add(new KeyValInterpreter(kvp));
+            //compiler.ContentCompilers.Add(new MetricCommenter());
+            compiler.ContentCompilers.Add(new SqlKeyValInterpreter(compiler.Source + "\\keyval.sql"));
+            compiler.ContentCompilers.Add(new KeyValInterpreter(kvp));
             
               
-            compiler.FileFilter = "*dbupdate*.sql";
-            compiler.Dest = @"D:\dev\CyberScope\CyberScopeBranch\CSwebdev\database\";
+            compiler.FileFilter = "*aspx*";
+            compiler.Dest = @"D:\dev\CyberScope\CyberScopeBranch\CSwebdev\code\CyberScope\RMA\2021";
+            //compiler.Dest = compiler.Source + "\\_compiled";
             compiler.Compile();
 
-            compiler.Dest = @"D:\dev\CyberScope\CyberScopeBranch\CSwebdev\database\sprocs\";
-            compiler.FileFilter = "*frmval*.sql";
-            compiler.Compile();
 
-            compiler.ContentFormatter = (c) => (c.RemoveEmptyLines());
-            compiler.Dest = @"D:\dev\CyberScope\CyberScopeBranch\CSwebdev\code\CyberScope\AAPS\2020";
-            compiler.FileFilter = "*.aspx*";
-            compiler.Compile(); 
+            Cache.CacheEdit();
 
-            //Cache.CacheEdit();
 
 
         }
     }
 }
+/*
+ 
+ 
+             compiler.Dest = @"D:\dev\CyberScope\CyberScopeBranch\CSwebdev\database\sprocs\";
+            compiler.FileFilter = "*frmval*.sql";
+            compiler.Compile();
+
+            compiler.ContentFormatter = (c) => (c.RemoveEmptyLines());
+            compiler.Dest = @"D:\dev\CyberScope\CyberScopeBranch\CSwebdev\code\CyberScope\FismaForms\2021"; 
+            compiler.FileFilter = "*.aspx*";
+            compiler.Compile();
+
+ 
+ 
+ */
 
 
