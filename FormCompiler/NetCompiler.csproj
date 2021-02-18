@@ -71,6 +71,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="DirectoryRecompiler.cs" />
     <Compile Include="Procedures\MetricCommenter.cs" />
+    <Compile Include="Projects\EinsteinCompiler.cs" />
     <Compile Include="Projects\DataCall.cs" />
     <Compile Include="Utils\Extentions.cs" />
     <Compile Include="Projects\CIOCompiler.cs" />
@@ -88,6 +89,5 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

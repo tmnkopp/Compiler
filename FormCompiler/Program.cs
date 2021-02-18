@@ -20,10 +20,8 @@ namespace Compiler
     class Program
     {
         public static void Main(string[] args)
-        {
-
-            DataCallCompiler.Run();
-             
+        { 
+            EinsteinCompiler.Run(); 
         }
 
         private static void Scaf() {
