@@ -1,0 +1,8 @@
+source: "c:\\_som\\_src\\_compile"
+dest: "c:\\_som\\_src\\_compile\\_compiled"
+filefilter: "*aspx*"
+contentcompilers:
+- NumericKeyReplacer:  ['keyval.sql']
+- KeyValReplacer:  ['replace.json'] 
+filenamecompilers: 
+- KeyValReplacer:  ['replace.json'] 
